@@ -2,16 +2,15 @@ package org.vera.cooldownPlugin.commands;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.vera.cooldownPlugin.internal.Cooldown;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class CommandList implements CommandExecutor {
 
@@ -21,7 +20,7 @@ public class CommandList implements CommandExecutor {
             StringBuilder sb = new StringBuilder();
 
             for (String user : Cooldown.getMarkedPlayers().keySet()) {
-                ArrayList<HashMap<String, String>> dataFromUser = Cooldown.getMarkedPlayers().get(user);
+                CopyOnWriteArrayList<HashMap<String, String>> dataFromUser = Cooldown.getMarkedPlayers().get(user);
                 Player playerUser = Bukkit.getPlayer(UUID.fromString(user));
                 StringBuilder sbMaterials = new StringBuilder();
 

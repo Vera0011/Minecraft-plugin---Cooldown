@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class CommandRemove implements CommandExecutor, TabCompleter {
 
@@ -45,7 +46,7 @@ public class CommandRemove implements CommandExecutor, TabCompleter {
     public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
         List<String> suggestions = new ArrayList<>();
         List<String> usersWithCooldown = new ArrayList<>();
-        HashMap<String, ArrayList<HashMap<String, String>>> users = Cooldown.getMarkedPlayers();
+        HashMap<String, CopyOnWriteArrayList<HashMap<String, String>>> users = Cooldown.getMarkedPlayers();
 
         for (String userId : users.keySet()) {
             Player currentUser = Bukkit.getPlayer(UUID.fromString(userId));
