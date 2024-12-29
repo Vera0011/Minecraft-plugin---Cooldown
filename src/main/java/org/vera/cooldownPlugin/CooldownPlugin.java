@@ -10,6 +10,7 @@ public final class CooldownPlugin extends JavaPlugin {
         // Plugin startup logic
         getLogger().info("Plugin enabled - Created by Vera0011");
         this.getCommand("cooldown").setExecutor(new CommandCooldown());
+        this.getCommand("cooldown").setTabCompleter(new CommandCooldown());
     }
 
     @Override
