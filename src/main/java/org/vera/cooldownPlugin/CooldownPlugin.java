@@ -17,8 +17,7 @@ public final class CooldownPlugin extends JavaPlugin {
         this.getCommand("cooldown-remove").setExecutor(new CommandRemove());
         this.getCommand("cooldown-remove").setTabCompleter(new CommandRemove());
 
-        //this.getCommand("cooldown-list").setExecutor(new CommandList());
-        //this.getCommand("cooldown-list").setTabCompleter(new CommandList());
+        this.getCommand("cooldown-list").setExecutor(new CommandList());
     }
 
     @Override
