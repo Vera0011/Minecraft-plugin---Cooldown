@@ -70,6 +70,12 @@ public class Cooldown {
         return true;
     }
 
+    /**
+     * Verifies if a specific user (name) has an active cooldown for a specific item
+     * @param userName The name of the user
+     * @param material The material name
+     * @return "true" if the user has an active cooldown for that specific item
+     */
     public static String hasCooldown(String userName, String material) {
         Player player = Bukkit.getPlayer(userName);
 
