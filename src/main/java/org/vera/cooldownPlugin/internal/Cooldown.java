@@ -7,7 +7,6 @@ import org.bukkit.entity.Player;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
