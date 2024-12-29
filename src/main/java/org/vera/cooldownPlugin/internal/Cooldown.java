@@ -1,6 +1,8 @@
 package org.vera.cooldownPlugin.internal;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -66,5 +68,23 @@ public class Cooldown {
         markedPlayers.clear();
         System.out.println("Cooldown cleaned");
         return true;
+    }
+
+    public static String hasCooldown(String userName, String material) {
+        Player player = Bukkit.getPlayer(userName);
+
+        if (player != null) {
+            String userId = player.getUniqueId().toString();
+
+            if (markedPlayers.containsKey(userId)) {
+                for (HashMap<String, String> customInfo : markedPlayers.get(userId)) {
+                    if (customInfo.get("material").equals(material.toUpperCase())) {
+                        return "true";
+                    }
+                }
+            }
+        }
+
+        return "false";
     }
 }
