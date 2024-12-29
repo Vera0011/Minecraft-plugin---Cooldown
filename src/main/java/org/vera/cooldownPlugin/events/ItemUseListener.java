@@ -1,5 +1,6 @@
 package org.vera.cooldownPlugin.events;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -22,7 +23,7 @@ public class ItemUseListener implements Listener {
             Material itemType = item.getType();
 
             if (Cooldown.hasCooldown(player.getName(), itemType.toString()).equals("true")) {
-                player.sendMessage("You are not allowed to place that block");
+                player.sendMessage(ChatColor.RED + "[Cooldown] - You are not allowed to place that block");
                 event.setCancelled(true);
             }
         }

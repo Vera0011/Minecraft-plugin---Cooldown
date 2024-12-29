@@ -8,6 +8,7 @@ import org.vera.cooldownPlugin.commands.CommandList;
 import org.vera.cooldownPlugin.commands.CommandRemove;
 import org.vera.cooldownPlugin.events.ItemUseListener;
 import org.vera.cooldownPlugin.events.ItemPickupListener;
+import org.vera.cooldownPlugin.internal.Scheduler;
 import org.vera.cooldownPlugin.placeholders.CooldownPlaceholders;
 
 public final class CooldownPlugin extends JavaPlugin {
@@ -25,6 +26,16 @@ public final class CooldownPlugin extends JavaPlugin {
         }
 
         getLogger().info("Plugin enabled");
+
+        // Schedules the cooldown removal
+        Bukkit.getScheduler().runTaskTimer(this, new Runnable() {
+            @Override
+            public void run() {
+                Scheduler.execute();
+            }
+        }, 0L, 20L);
+
+        getLogger().info("Scheduler task enabled");
     }
 
     @Override

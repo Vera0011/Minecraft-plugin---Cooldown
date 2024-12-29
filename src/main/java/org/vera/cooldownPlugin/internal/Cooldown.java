@@ -7,6 +7,8 @@ import org.bukkit.entity.Player;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * This class manipulates the cooldown history.
@@ -20,16 +22,16 @@ import java.util.HashMap;
  * @author Vera0011
  */
 public class Cooldown {
-    private static final HashMap<String, ArrayList<HashMap<String, String>>> markedPlayers = new HashMap<>();
+    private static final HashMap<String, CopyOnWriteArrayList<HashMap<String, String>>> markedPlayers = new HashMap<>();
 
-    public static HashMap<String, ArrayList<HashMap<String, String>>> getMarkedPlayers() {
+    public static HashMap<String, CopyOnWriteArrayList<HashMap<String, String>>> getMarkedPlayers() {
         return markedPlayers;
     }
 
     /**
      * Adds a user to the cooldown
      */
-    public static boolean addUserToCooldown(String userId, Date newDate, Material material) {
+    public static synchronized boolean addUserToCooldown(String userId, Date newDate, Material material) {
         HashMap<String, String> customInfo = new HashMap<>();
 
         customInfo.put("date", newDate.toString());
@@ -38,12 +40,10 @@ public class Cooldown {
         if (markedPlayers.containsKey(userId)) {
             markedPlayers.get(userId).add(customInfo);
         } else {
-            ArrayList<HashMap<String, String>> itemsList = new ArrayList<>();
+            CopyOnWriteArrayList<HashMap<String, String>> itemsList = new CopyOnWriteArrayList<>();
             itemsList.add(customInfo);
             markedPlayers.put(userId, itemsList);
         }
-
-        System.out.println("Added user " + userId + " to cooldown");
 
         return true;
     }
@@ -53,25 +53,43 @@ public class Cooldown {
      *
      * @return true if the deletion was successfully
      */
-    public static boolean removeUserFromCooldown(String userId) {
+    public static synchronized boolean removeUserFromCooldown(String userId) {
         if (markedPlayers.get(userId) != null) {
             markedPlayers.remove(userId);
-            System.out.println("Removed user " + userId + " from cooldown");
             return true;
         } else {
-            System.out.println("No user removed");
             return false;
         }
     }
 
-    public static boolean cleanCooldown() {
+    public static synchronized void removeMaterialFromCooldown(String userId, String material) {
+        if (markedPlayers.get(userId) != null) {
+            CopyOnWriteArrayList<HashMap<String, String>> itemsList = markedPlayers.get(userId);
+
+            ArrayList<HashMap<String, String>> itemsToRemove = new ArrayList<>();
+
+            for (HashMap<String, String> item : itemsList) {
+                if (item.get("material").equals(material)) {
+                    itemsToRemove.add(item);
+                }
+            }
+
+            itemsList.removeAll(itemsToRemove);
+
+            if (itemsList.isEmpty()) {
+                markedPlayers.remove(userId);
+            }
+        }
+    }
+
+    public static synchronized boolean cleanCooldown() {
         markedPlayers.clear();
-        System.out.println("Cooldown cleaned");
         return true;
     }
 
     /**
      * Verifies if a specific user (name) has an active cooldown for a specific item
+     *
      * @param userName The name of the user
      * @param material The material name
      * @return "true" if the user has an active cooldown for that specific item
