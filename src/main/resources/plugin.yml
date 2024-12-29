@@ -4,6 +4,14 @@ main: org.vera.cooldownPlugin.CooldownPlugin
 api-version: '1.20'
 commands:
   cooldown:
-    description: Your description
-    usage: /cooldown
+    description: Adds a user to a material cooldown
+    usage: "[Cooldown] - Usage: /cooldown <player> <material/item> <seconds>"
     permission: cooldownPlugin.cooldown
+  cooldown-remove:
+    description: Removes a user from a material cooldown
+    usage: "[Cooldown] - Usage: /cooldown-remove <player>"
+    permission: cooldownPlugin.cooldown-remove
+  cooldown-list:
+    description: Shows a list of users with a current cooldown
+    usage: "[Cooldown] - Usage: /cooldown-list"
+    permission: cooldownPlugin.cooldown-list
