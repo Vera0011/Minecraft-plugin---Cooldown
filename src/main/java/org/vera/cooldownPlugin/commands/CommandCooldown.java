@@ -28,7 +28,13 @@ public class CommandCooldown implements CommandExecutor, TabCompleter {
 
             Player playerSelected = Bukkit.getPlayer(args[0]);
             Material material = Material.matchMaterial(args[1]);
-            int seconds = Integer.parseInt(args[2]);
+            int seconds = 0;
+
+            try {
+                seconds = Integer.parseInt(args[2]);
+            } catch (Exception e) {
+                sender.sendMessage(ChatColor.RED + "[Cooldown] - Invalid seconds - Min: 1, Max: 31536000 (365d)");
+            }
 
             // Validates inputs
             if (playerSelected == null) {

@@ -1,10 +1,14 @@
 package org.vera.cooldownPlugin;
 
 import org.bukkit.Bukkit;
+import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.vera.cooldownPlugin.commands.CommandCooldown;
 import org.vera.cooldownPlugin.commands.CommandList;
 import org.vera.cooldownPlugin.commands.CommandRemove;
+import org.vera.cooldownPlugin.events.ItemUseListener;
+import org.vera.cooldownPlugin.events.ItemPickupListener;
+import org.vera.cooldownPlugin.internal.Scheduler;
 import org.vera.cooldownPlugin.placeholders.CooldownPlaceholders;
 
 public final class CooldownPlugin extends JavaPlugin {
@@ -12,6 +16,7 @@ public final class CooldownPlugin extends JavaPlugin {
     @Override
     public void onEnable() {
         this.loadCommands();
+        this.loadEvents();
 
         if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
             new CooldownPlaceholders().register();
@@ -20,12 +25,22 @@ public final class CooldownPlugin extends JavaPlugin {
             getLogger().warning("PlaceholderAPI not found! Placeholder expansions will not work.");
         }
 
-        getLogger().info("Plugin enabled - Created by Vera0011");
+        getLogger().info("Plugin enabled");
+
+        // Schedules the cooldown removal
+        Bukkit.getScheduler().runTaskTimer(this, new Runnable() {
+            @Override
+            public void run() {
+                Scheduler.execute();
+            }
+        }, 0L, 20L);
+
+        getLogger().info("Scheduler task enabled");
     }
 
     @Override
     public void onDisable() {
-        getLogger().info("Plugin disabled - Created by Vera0011");
+        getLogger().info("Plugin disabled");
     }
 
     private void loadCommands() {
@@ -36,5 +51,15 @@ public final class CooldownPlugin extends JavaPlugin {
         this.getCommand("cooldown-remove").setTabCompleter(new CommandRemove());
 
         this.getCommand("cooldown-list").setExecutor(new CommandList());
+
+        getLogger().info("Commands loaded");
+    }
+
+    private void loadEvents() {
+        PluginManager pm = getServer().getPluginManager();
+        pm.registerEvents(new ItemUseListener(), this);
+        pm.registerEvents(new ItemPickupListener(), this);
+
+        getLogger().info("Events loaded");
     }
 }
