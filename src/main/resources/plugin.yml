@@ -15,3 +15,5 @@ commands:
     description: Shows a list of users with a current cooldown
     usage: "[Cooldown] - Usage: /cooldown-list"
     permission: cooldownPlugin.cooldown-list
+
+softdepend: [PlaceholderAPI]
