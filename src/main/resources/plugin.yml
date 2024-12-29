@@ -1,0 +1,9 @@
+name: cooldownPlugin
+version: '1.0-SNAPSHOT'
+main: org.vera.cooldownPlugin.CooldownPlugin
+api-version: '1.20'
+commands:
+  cooldown:
+    description: Your description
+    usage: /cooldown
+    permission: cooldownPlugin.cooldown
