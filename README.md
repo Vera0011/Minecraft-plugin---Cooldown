@@ -19,4 +19,4 @@ Users and materials are stored in HashMap, similar to this JSON:
 }
 ```
 
-This plugin also provides an integration with the Placeholder API. The only available placeholder is `%cooldownPlugin_cooldown_USER_MATERIAL`, that returns `true` or `false` if the user has a cooldown in that specified Material.
+This plugin also provides an integration with the Placeholder API. The only available placeholder is `%cooldownPlugin_cooldown_USER_MATERIAL%`, that returns `true` or `false` if the user has a cooldown in that specified Material.
