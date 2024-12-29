@@ -25,7 +25,6 @@ public final class CooldownPlugin extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        // Plugin shutdown logic
         getLogger().info("Plugin disabled - Created by Vera0011");
     }
 
@@ -37,11 +36,5 @@ public final class CooldownPlugin extends JavaPlugin {
         this.getCommand("cooldown-remove").setTabCompleter(new CommandRemove());
 
         this.getCommand("cooldown-list").setExecutor(new CommandList());
-    }
-
-    @Override
-    public void onDisable() {
-        // Plugin shutdown logic
-        getLogger().info("Plugin disabled - Created by Vera0011");
     }
 }
